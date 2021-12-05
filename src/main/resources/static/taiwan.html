@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <!-- Font Awesome for home icon-->
+    <script src="https://kit.fontawesome.com/996cf4158f.js" crossorigin="anonymous"></script>
+
+    <!-- Iconify for flag icons -->
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+    <style>
+        .card-header {
+            border-bottom: 0px !important;
+        }
+
+        .hover-menu:hover {
+            background-color: lightgray;
+        }
+
+        .buttonHover:hover {
+            background-color:#6c757d;
+            color: white;
+        }
+    </style>
+
+    <title>Aramco Trading - Taiwan</title>
+</head>
+
+<body class="bg-dark" onload="createAllCharts()">
+<nav class="navbar navbar-dark mb-4 sticky-top" style="background-color: #2E2E2E; z-index: 2000;">
+    <div class="container-fluid px-2">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="z-index: 2001;">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Go back to...</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+
+        <a href="/" class="text-dark" style="text-decoration: none;">
+            <div class="mb-1 py-1 hover-menu">
+                <i class="fas fa-home"></i> <span class="mx-2" style="text-decoration: none;">Home</span>
+            </div>
+        </a>
+
+        <div class="border-bottom"></div>
+
+        <a href="/indo.html" class="text-dark" style="text-decoration: none;">
+            <div class="my-1 py-1 hover-menu">
+                <span class="iconify-inline" data-icon="emojione:flag-for-indonesia"></span> <span class="mx-2" style="text-decoration: none;">Indonesia</span>
+            </div>
+        </a>
+
+        <div class="border-bottom"></div>
+
+        <a href="/taiwan.html" class="text-dark" style="text-decoration: none;">
+            <div class="mt-1 py-1 hover-menu">
+                <span class="iconify-inline" data-icon="emojione:flag-for-taiwan"></span> <span class="mx-2" style="text-decoration: none;"><strong>Taiwan</strong></span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="container-fluid px-4 mb-5">
+
+    <div class="row mb-3">
+        <div class="col text-white">
+            <h4 class="py-1">
+                    <span class="rounded-pill px-2 py-1" style="background-color: #2E2E2E">
+                        <span class="iconify-inline" data-icon="emojione:flag-for-taiwan"></span> <span class="px-1">Taiwan</span>
+                    </span>
+            </h4>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-auto text-white">
+            <h5 class="px-1 d-inline">Gross & Net Balance <span id='grossNetYear' class="badge rounded-pill" style="background-color: #424242;">Across Years</span></h5>
+        </div>
+
+        <div class="col-auto">
+            <button type="button" id="grossNetReset" class="btn btn-sm btn-secondary d-none" onclick="updateGrossNetCharts()"><strong>Reset Years</strong></button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <h6 class="m-0" style="font-family: Arial; font-weight: bold;">Gross Balance</h6>
+                </div>
+
+                <div class="card-body">
+                    <div>
+                        <canvas id="grossBalanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <h6 class="m-0" style="font-family: arial; font-weight: bold;">Net Balance</h6>
+                </div>
+
+                <div class="card-body">
+                    <div>
+                        <canvas id="netBalanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="row mt-4 mb-4">
+        <div class="col mt-2">
+            <div class="border-bottom border-secondary">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-auto text-white">
+            <h5 class="px-1 d-inline">Supply <span id='supplyYear' class="badge rounded-pill" style="background-color: #424242;">Across Years</span></h5>
+        </div>
+
+        <div class="col-auto">
+            <button type="button" id="supplyYearReset" class="btn btn-sm btn-secondary d-none" onclick="updateSupplyCharts()"><strong>Reset Years</strong></button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <div class="row justify-content-between">
+                        <div class="col align-self-center">
+                            <h6 class="m-0" style="font-family: Arial; font-weight: bold;">Total Primary Energy Supply</h6>
+                        </div>
+
+                        <div class="col-auto invisible">
+                            <select class="btn btn-sm btn-secondary text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242;"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div id="primaryEnergySupplyChartDiv">
+                        <canvas id="primaryEnergySupplyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="card h-100">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <div class="row justify-content-between">
+                        <div class="col align-self-center">
+                            <h6 class="m-0" style="font-family: arial; font-weight: bold;">Supply Types</h6>
+                        </div>
+
+                        <div class="col-auto d-flex">
+                            <strong class="align-self-center mx-1">Product: </strong> <select id="typesDropdown" onchange="selectedProduct(this.value)" class="btn btn-sm btn-secondary text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242;"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div id="typesChartDiv">
+                        <canvas id="typesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="row mt-4 mb-4">
+        <div class="col mt-2">
+            <div class="border-bottom border-secondary">
+            </div>
+        </div>
+    </div>
+
+    <!-- Consumption blocks -->
+    <div class="row mb-4">
+        <div class="col-auto text-white">
+            <h5 class="mb-0">Consumption</h5>
+        </div>
+
+        <div class="col-auto">
+            <button type="button" id="consumptionYearReset" class="btn btn-sm btn-secondary d-none mb-0" onclick="updateConsumptionChart()"><strong>Reset Years</strong></button>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <div class="row">
+                        <h6 class="m-0" style="font-family: Arial; font-weight: bold;">Products <span id='productsYear' class="badge rounded-pill" style="background-color: #424242;">Across Years</span></h6>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div>
+                        <canvas id="productVolumeLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="h-100 card">
+                <div class="h-100 card-body">
+                    <div class="h-100">
+                        <canvas id="productBreakdownChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-8">
+            <div class="card h-100">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <div class="row justify-content-between">
+                        <div class="col align-self-center">
+                            <h6 class="m-0" style="font-family: arial; font-weight: bold;">Product - Breakdown by Sectors <span id='productSectorYear' class="badge rounded-pill" style="background-color: #424242;">Across Years</span></h6>
+                        </div>
+
+                        <div class="col-auto d-flex">
+                            <strong class="align-self-center mx-1">Product: </strong> <select id="c_typesDropdown" class="btn btn-secondary btn-sm text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242;" onchange='getProductBreakdownSector(1)'>
+                                <option value="Crude Oil">Crude Oil</option>
+                                <option value="Diesel Fuel">Diesel Fuel</option>
+                                <option value="Fuel Oil">Fuel Oil</option>
+                                <option value="Gasoline">Gasoline</option>
+                                <option value="Jet Fuel">Jet Fuel</option>
+                                <option value="LPG" selected>LPG</option>
+                                <option value="Naphtha">Naphtha</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="container-fluid p-0 h-100">
+                        <div class="row h-100">
+                            <div class="col-6">
+                                <div class="card h-100">
+                                    <div class="card-header text-white" style="background-color: #2E2E2E;">
+                                        <div class="row justify-content-between">
+                                            <div class="col align-self-center">
+                                                <h6 class="m-0" style="font-family: arial; font-weight: bold;">Sectors</h6>
+                                            </div>
+
+                                            <div class="col-auto invisible">
+                                                <select class="btn btn-secondary btn-sm text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242; width: 2px;"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div id="productBySectorsNoData" class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                            </svg>
+                                            <div>
+                                                No data found
+                                            </div>
+                                        </div>
+
+                                        <div id="sectorVolumeBarChart">
+                                            <canvas id="product_sector_bar"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="card h-100">
+                                    <div class="card-header text-white" style="background-color: #2E2E2E;">
+                                        <div class="row justify-content-between">
+                                            <div class="col align-self-center">
+                                                <h6 class="m-0" style="font-family: arial; font-weight: bold;">Breakdown</h6>
+                                            </div>
+
+                                            <div class="col-auto d-flex">
+                                                <strong class="align-self-center mx-1">Sector: </strong> <select id="c_productSectorDropdown" class="btn btn-secondary btn-sm text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242;" onchange='changeSectorBreakdownChart()'></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div id="breakdownNoData" class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                            </svg>
+                                            <div>
+                                                No data found
+                                            </div>
+                                        </div>
+
+                                        <div id="subSectorBarCharts">
+                                            <canvas id="sectorSubSector"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card h-100">
+                <div class="card-header text-white" style="background-color: #2E2E2E;">
+                    <div class="row justify-content-between">
+                        <div class="col-auto align-self-center">
+                            <h6 class="m-0" style="font-family: arial; font-weight: bold;">Sector - Breakdown by Products <span id='sectorProductYear' class="badge rounded-pill" style="background-color: #424242;">Across Years</span></h6>
+                        </div>
+
+                        <div class="col-auto invisible">
+                            <select style="width: 2px;" class="btn btn-sm btn-secondary text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242; width: 100px;" ></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-1">
+                        <strong>Sector:</strong> <select id="c_sectorDropdown" class="btn btn-sm btn-secondary text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242;" onchange='getSectorProductBreakdown(1,0)'></select>
+                    </div>
+
+                    <div>
+                        <strong>Sub-sector: </strong> <select id="c_subSecDropdown" class="btn btn-sm btn-secondary text-start px-1 pt-0 pb-1 text-white border-dark" style="background-color: #424242;" onchange='getSectorProductBreakdown(0,1)'></select>
+                    </div>
+
+                    <div id="sectorByProductsNoData" class="alert alert-secondary d-flex align-items-center mt-4 d-none" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                        <div>
+                            No data found
+                        </div>
+                    </div>
+
+                    <div id="sectorProductBarChart">
+                        <canvas id="sectorProductChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <!-- Chart.Js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="/js/taiwan.js"></script>
+
+</body>
+</html>

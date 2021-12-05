@@ -1,0 +1,696 @@
+{
+	"info": {
+		"_postman_id": "ef2319a2-7439-436f-ac7e-2d091be3e4af",
+		"name": "OOP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Indo",
+			"item": [
+				{
+					"name": "index.js and indo.js",
+					"item": [
+						{
+							"name": "getDistinctByCriteria",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/indoData/getDistinctByCriteria?selectParam=year&isExport=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"indoData",
+										"getDistinctByCriteria"
+									],
+									"query": [
+										{
+											"key": "selectParam",
+											"value": "year",
+											"description": "category / country / harbor / month / product / year"
+										},
+										{
+											"key": "year",
+											"value": "2021",
+											"disabled": true
+										},
+										{
+											"key": "month",
+											"value": "1",
+											"description": "1 (Jan), 2 (Feb), ...",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": "Crude Oil",
+											"disabled": true
+										},
+										{
+											"key": "country",
+											"value": "Singapore",
+											"disabled": true
+										},
+										{
+											"key": "harbor",
+											"value": "Balikpapan",
+											"disabled": true
+										},
+										{
+											"key": "isExport",
+											"value": "0",
+											"description": "0 (false) OR 1 (true)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getByCriteriaGroupBy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/indoData/getByCriteriaGroupBy?selectParam1=year&isExport=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"indoData",
+										"getByCriteriaGroupBy"
+									],
+									"query": [
+										{
+											"key": "selectParam1",
+											"value": "year",
+											"description": "category / country / harbor / month / product / year"
+										},
+										{
+											"key": "selectParam2",
+											"value": "category",
+											"description": "category / country / harbor / month / product / year",
+											"disabled": true
+										},
+										{
+											"key": "year",
+											"value": "2021",
+											"disabled": true
+										},
+										{
+											"key": "month",
+											"value": "1",
+											"description": "1 (Jan), 2 (Feb), ...",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": "Crude Oil",
+											"disabled": true
+										},
+										{
+											"key": "country",
+											"value": "Singapore",
+											"disabled": true
+										},
+										{
+											"key": "harbor",
+											"value": "Balikpapan",
+											"disabled": true
+										},
+										{
+											"key": "isExport",
+											"value": "0",
+											"description": "0 (false) OR 1 (true)"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Taiwan",
+			"item": [
+				{
+					"name": "index.js",
+					"item": [
+						{
+							"name": "getGrossBalance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twOverall/getGrossBalance?year=2018",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twOverall",
+										"getGrossBalance"
+									],
+									"query": [
+										{
+											"key": "year",
+											"value": "2018"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getNetBalance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twSupply/getNetBalance?year=2018",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twSupply",
+										"getNetBalance"
+									],
+									"query": [
+										{
+											"key": "year",
+											"value": "2018"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getNetImport",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twSupply/getNetImport?year=2018",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twSupply",
+										"getNetImport"
+									],
+									"query": [
+										{
+											"key": "year",
+											"value": "2018"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getGrossBalanceOverTime",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twOverall/getGrossBalanceOverTime?selectParam=year",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twOverall",
+										"getGrossBalanceOverTime"
+									],
+									"query": [
+										{
+											"key": "selectParam",
+											"value": "year"
+										},
+										{
+											"key": "year",
+											"value": "2018",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getNetBalanceOverTime",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twSupply/getNetBalanceOverTime?selectParam=year",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twSupply",
+										"getNetBalanceOverTime"
+									],
+									"query": [
+										{
+											"key": "selectParam",
+											"value": "year"
+										},
+										{
+											"key": "year",
+											"value": "2018",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getNetImportOverTime",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twSupply/getNetImportOverTime?selectParam=year",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twSupply",
+										"getNetImportOverTime"
+									],
+									"query": [
+										{
+											"key": "selectParam",
+											"value": "year"
+										},
+										{
+											"key": "year",
+											"value": "2018",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSupplyTypeOverTime",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8200/twSupply/getSupplyTypeOverTime?selectParam=year&type=Import",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8200",
+									"path": [
+										"twSupply",
+										"getSupplyTypeOverTime"
+									],
+									"query": [
+										{
+											"key": "selectParam",
+											"value": "year"
+										},
+										{
+											"key": "year",
+											"value": "2018",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "Import"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "taiwan.js",
+					"item": [
+						{
+							"name": "Overall",
+							"item": [
+								{
+									"name": "getGrossBalanceByProduct",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twOverall/getGrossBalanceByProduct?selectParam=year",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twOverall",
+												"getGrossBalanceByProduct"
+											],
+											"query": [
+												{
+													"key": "selectParam",
+													"value": "year"
+												},
+												{
+													"key": "year",
+													"value": "2018",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getNetBalanceByProduct",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twSupply/getNetBalanceByProduct?selectParam=year",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twSupply",
+												"getNetBalanceByProduct"
+											],
+											"query": [
+												{
+													"key": "selectParam",
+													"value": "year"
+												},
+												{
+													"key": "year",
+													"value": "2018",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getDistinctProducts",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twOverall/getDistinctProducts",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twOverall",
+												"getDistinctProducts"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Supply",
+							"item": [
+								{
+									"name": "getPrimaryEnergySupply",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twSupply/getPrimaryEnergySupply?selectParam=year",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twSupply",
+												"getPrimaryEnergySupply"
+											],
+											"query": [
+												{
+													"key": "selectParam",
+													"value": "year"
+												},
+												{
+													"key": "year",
+													"value": "2017",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getTypeBreakdownOfProduct",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twSupply/getTypeBreakdownOfProduct?product=Crude Oil",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twSupply",
+												"getTypeBreakdownOfProduct"
+											],
+											"query": [
+												{
+													"key": "product",
+													"value": "Crude Oil"
+												},
+												{
+													"key": "year",
+													"value": "2020",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Consumption",
+							"item": [
+								{
+									"name": "getDomesticEnergyConsumption",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twConsumption/getDomesticEnergyConsumption?selectParam=year",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twConsumption",
+												"getDomesticEnergyConsumption"
+											],
+											"query": [
+												{
+													"key": "selectParam",
+													"value": "year"
+												},
+												{
+													"key": "year",
+													"value": "2018",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getProductBreakdown",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twConsumption/getProductBreakdown",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twConsumption",
+												"getProductBreakdown"
+											],
+											"query": [
+												{
+													"key": "year",
+													"value": "2018",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getProductSectorBreakdown",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twConsumption/getProductSectorBreakdown?product=Diesel Fuel",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twConsumption",
+												"getProductSectorBreakdown"
+											],
+											"query": [
+												{
+													"key": "product",
+													"value": "Diesel Fuel"
+												},
+												{
+													"key": "year",
+													"value": "2018",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getSectorProductBreakdown",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twConsumption/getProductBreakdown?year=2018&sector=Service Sector",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twConsumption",
+												"getProductBreakdown"
+											],
+											"query": [
+												{
+													"key": "year",
+													"value": "2018"
+												},
+												{
+													"key": "sector",
+													"value": "Service Sector"
+												},
+												{
+													"key": "subSector",
+													"value": "Others",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getSectorSubSectorBreakdown",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twConsumption/getSectorSubSectorBreakdown?product=Diesel Fuel",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twConsumption",
+												"getSectorSubSectorBreakdown"
+											],
+											"query": [
+												{
+													"key": "product",
+													"value": "Diesel Fuel"
+												},
+												{
+													"key": "year",
+													"value": "2018",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getSectorsSubSectors",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8200/twConsumption/getSectorsSubSectors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8200",
+											"path": [
+												"twConsumption",
+												"getSectorsSubSectors"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

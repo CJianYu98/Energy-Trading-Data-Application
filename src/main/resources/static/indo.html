@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <!-- Font Awesome for home icon-->
+    <script src="https://kit.fontawesome.com/996cf4158f.js" crossorigin="anonymous"></script>
+
+    <!-- Iconify for flag icons -->
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+    <style>
+        .card-header {
+            border-bottom: 0px !important;
+        }
+
+        .hover-menu:hover {
+            background-color: lightgray;
+        }
+    </style>
+
+    <title>Aramco Trading - Indonesia</title>
+</head>
+
+<body class="bg-dark" onload="createAllCharts()">
+    <nav class="navbar navbar-dark mb-4 sticky-top" style="background-color: #2E2E2E; z-index: 2000;">
+        <div class="container-fluid px-2">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="d-flex text-white" style="font-size: 14px;">
+
+                <div class="mx-2">
+                    Year: <span id="currentYear" class="mx-1 px-2 py-1 bg-dark rounded border border-secondary">All</span>
+                </div>
+
+                <div class="mx-2">
+                    Month: <span id="currentMonth" class="mx-1 px-2 py-1 bg-dark rounded border border-secondary">All</span>
+                </div>
+
+                <div class="mx-2">
+                    Product: <span id="currentCategory" class="mx-1 px-2 py-1 bg-dark rounded border border-secondary">All</span>
+                </div>
+
+                <div class="mx-2">
+                    Country: <span id="currentCountry" class="mx-1 px-2 py-1 bg-dark rounded border border-secondary">All</span>
+                </div>
+
+                <div class="mx-2">
+                    Harbor: <span id="currentHarbor" class="mx-1 px-2 py-1 bg-dark rounded border border-secondary">All</span>
+                </div>
+
+                <div class="mx-2">
+                    Units: <span id="currentUnits" class="mx-1 px-2 py-1 bg-dark rounded border border-secondary">Weight (MT)</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="z-index: 2001;">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Go back to...</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+
+            <a href="/" class="text-dark" style="text-decoration: none;">
+                <div class="mb-1 py-1 hover-menu">
+                    <i class="fas fa-home"></i> <span class="mx-2" style="text-decoration: none;">Home</span>
+                </div>
+            </a>
+
+            <div class="border-bottom"></div>
+
+            <a href="/indo.html" class="text-dark" style="text-decoration: none;">
+                <div class="my-1 py-1 hover-menu">
+                    <span class="iconify-inline" data-icon="emojione:flag-for-indonesia"></span> <span class="mx-2" style="text-decoration: none;"><strong>Indonesia</strong></span>
+                </div>
+            </a>
+
+            <div class="border-bottom"></div>
+
+            <a href="/taiwan.html" class="text-dark" style="text-decoration: none;">
+                <div class="mt-1 py-1 hover-menu">
+                    <span class="iconify-inline" data-icon="emojione:flag-for-taiwan"></span> <span class="mx-2" style="text-decoration: none;">Taiwan</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4 mb-5">
+
+        <div class="row mb-3">
+            <div class="col text-white">
+                <h4 class="py-1">
+                    <span class="rounded-pill px-2 py-1" style="background-color: #2E2E2E">
+                        <span class="iconify-inline" data-icon="emojione:flag-for-indonesia"></span> <span class="px-1">Indonesia</span>
+                    </span>
+                </h4>
+            </div>
+        </div>
+
+        <div class="mb-4 row justify-content-between">
+            <div class="col-10">
+                <div class="container-fluid p-0">
+                    <div class="mb-4 row justify-content-between">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header bg-dark text-white">
+                                    <div class="row justify-content-between">
+                                        <div class="col">
+                                            <h5 class="card-title m-0">Products</h5>
+                                        </div>
+                                        <div class="col-auto d-none" id="goBackToYears">
+                                            <button type="button" class="btn btn-sm btn-secondary" onclick="resetYears()"><strong>Reset All Years</strong></button>
+                                        </div>
+                                        <div class="col-auto d-none" id="goBackToMonths">
+                                            <button type="button" class="btn btn-sm btn-secondary" onclick="resetMonths()"><strong>Reset All Months</strong></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="container-fluid p-0">
+                                        <div class="row justify-content-between">
+                                            <div class="col-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header text-white" style="background-color: #424242">
+                                                        <h6 class="m-0" style="font-family: Arial; font-weight: bold;">Import</h6>
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <div id='productImportNoData' class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                            </svg>
+                                                            <div>
+                                                                No data found
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="productImportTotal">
+                                                            <strong>Total: </strong>
+                                                            <span id="productImportChartTotal" class="text-start px-2 py-1 text-white border rounded" style="background-color: #424242;"></span>
+                                                        </div>
+
+                                                        <div id="productImportChartDiv" class="mt-3">
+                                                            <canvas id="productImportChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header text-white" style="background-color: #424242">
+                                                        <h6 class="m-0" style="font-family: arial; font-weight: bold;">Export</h6>
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <div id='productExportNoData' class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                            </svg>
+                                                            <div>
+                                                                No data found
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="productExportTotal">
+                                                            <strong>Total: </strong>
+                                                            <span id="productExportChartTotal" class="text-start px-2 py-1 text-white border rounded" style="background-color: #424242;"></span>
+                                                        </div>
+
+                                                        <div id="productExportChartDiv" class="mt-3">
+                                                            <canvas id="productExportChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header bg-dark text-white">
+                                    <h5 class="card-title m-0">Product Breakdown</h5>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="container-fluid p-0">
+                                        <div class="mb-4 row">
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-header text-white" style="background-color: #424242">
+                                                        <h6 class="m-0" style="font-family: arial; font-weight: bold;">Import</h6>
+                                                    </div>
+
+                                                    <div class="card-body" style="height: 405px;">
+                                                        <div id="breakdownImportNoData" class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                            </svg>
+                                                            <div>
+                                                                No data found
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="breakdownImportChartDiv" class="h-100">
+                                                            <canvas id="breakdownImportChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-header text-white" style="background-color: #424242">
+                                                        <h6 class="m-0" style="font-family: arial; font-weight: bold;">Export</h6>
+                                                    </div>
+
+                                                    <div class="card-body" style="height: 446px;">
+                                                        <div id="breakdownExportNoData" class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                            </svg>
+                                                            <div>
+                                                                No data found
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="breakdownExportChartDiv" class="h-100">
+                                                            <canvas id="breakdownExportChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-8">
+                            <div class="container-fluid p-0">
+                                <div class="mb-4 row justify-content-between">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-header bg-dark text-white">
+                                                <div class="row justify-content-between">
+                                                    <div class="col">
+                                                        <h5 class="card-title m-0">Countries <span class="badge rounded-pill" style="background-color: #424242" id="countriesIndicator">Top 10</span></h5>
+                                                    </div>
+                                                    <div class="col-auto d-none" id="goBackToCountries">
+                                                        <button type="button" class="btn btn-sm btn-secondary" onclick="resetCountry()"><strong>Reset All Countries</strong></button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="container-fluid p-0">
+                                                    <div class="row justify-content-between" style="height: 422px;">
+                                                        <div class="col-8 h-100">
+                                                            <div class="card h-100">
+                                                                <div class="card-body h-100">
+                                                                    <div id="countriesNoData" class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                                        </svg>
+                                                                        <div>
+                                                                            No data found
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="countriesChartDiv" class="h-100">
+                                                                        <canvas id="countriesChart"></canvas>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-4 h-100">
+                                                            <div class="h-100" style="position: relative; overflow: auto;">
+                                                                <table id="countriesTableParent" class="table table-bordered table-striped table-hover m-0">
+                                                                    <thead class="table-dark border-white sticky-top" style="font-size:10px">
+                                                                        <tr>
+                                                                            <th scope="col">#</th>
+                                                                            <th scope="col" id="countryTableHeader">Country</th>
+                                                                            <th scope="col">Net</th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody id ="countriesTable" style="font-size:10px">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-between">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-header bg-dark text-white">
+                                                <div class="row justify-content-between">
+                                                    <div class="col">
+                                                        <h5 class="card-title m-0">Harbors <span class="badge rounded-pill" style="background-color: #424242" id="harborsIndicator">Top 10</span></h5>
+                                                    </div>
+                                                    <div class="col-auto d-none" id="goBackToHarbors">
+                                                        <button type="button" class="btn btn-sm btn-secondary" onclick="resetHarbor()"><strong>Reset All Harbors</strong></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="container-fluid p-0">
+                                                    <div class="row justify-content-between" style="height: 423px;">
+                                                        <div class="col-8 h-100">
+                                                            <div class="card h-100">
+                                                                <div class="card-body h-100">
+                                                                    <div id="harborsNoData" class="alert alert-secondary d-flex align-items-center d-none" role="alert">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                                        </svg>
+                                                                        <div>
+                                                                            No data found
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="harborsChartDiv" class="h-100">
+                                                                        <canvas id="harborsChart"></canvas>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-4 h-100">
+                                                            <div class="h-100" style="position: relative; overflow: auto;">
+                                                                <table id="harborsTableParent" class="table table-bordered table-striped table-hover m-0">
+                                                                    <thead class="table-dark border-white sticky-top" style="font-size:10px">
+                                                                        <tr>
+                                                                            <th scope="col">#</th>
+                                                                            <th scope="col" id="harborTableHeader">Harbor</th>
+                                                                            <th scope="col">Net</th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody id="harborsTable" style="font-size:10px">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white">
+                                <div class="card-header bg-dark text-white">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>Filter by:</strong>
+                                        </div>
+
+                                        <div>
+                                            <button type="button" class="btn btn-success btn-sm" onclick="updateAllCharts()"><strong>Filter</strong></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="filterOptions" class="card-body pt-1 bg-dark border-top border-white" style="font-size: 14px;">
+                                    <div class="mb-2">
+                                        <div>
+                                            Year
+                                        </div>
+
+                                        <div>
+                                            <select id="yearFilter" class="btn btn-sm btn-secondary text-start px-1 py-0 w-100 text-white border-dark" style="background-color: #424242">
+                                                <option value="all" selected>All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div>
+                                            Month
+                                        </div>
+
+                                        <div>
+                                            <select id="monthFilter" class="btn btn-sm btn-secondary text-start px-1 py-0 w-100 text-white border-dark" style="background-color: #424242">
+                                                <option value="all" selected>All</option>
+                                                <option value="1">Jan</option>
+                                                <option value="2">Feb</option>
+                                                <option value="3">Mar</option>
+                                                <option value="4">Apr</option>
+                                                <option value="5">May</option>
+                                                <option value="6">Jun</option>
+                                                <option value="7">Jul</option>
+                                                <option value="8">Aug</option>
+                                                <option value="9">Sep</option>
+                                                <option value="10">Oct</option>
+                                                <option value="11">Nov</option>
+                                                <option value="12">Dec</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div>
+                                            Product
+                                        </div>
+
+                                        <div>
+                                            <select id="categoryFilter" class="btn btn-sm btn-secondary text-start px-1 py-0 w-100 text-white border-dark" style="background-color: #424242">
+                                                <option value="all" selected>All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div>
+                                            Country
+                                        </div>
+
+                                        <div>
+                                            <select id="countryFilter" class="btn btn-sm btn-secondary text-start px-1 py-0 w-100 text-white border-dark" style="background-color: #424242">
+                                                <option value="all" selected>All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div>
+                                            Harbor
+                                        </div>
+
+                                        <div>
+                                            <select id="harborFilter" class="btn btn-sm btn-secondary text-start px-1 py-0 w-100 text-white border-dark" style="background-color: #424242">
+                                                <option value="all" selected>All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            Units
+                                        </div>
+
+                                        <div>
+                                            <select id="unitsFilter" class="btn btn-sm btn-secondary text-start px-1 py-0 w-100 text-white border-dark" style="background-color: #424242">
+                                                <option value="weight_tonne" selected>Weight (MT)</option>
+                                                <option value="weight_kg">Weight (KG)</option>
+                                                <option value="value">Value ($ USD)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+<!-- Chart.Js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="/js/indo.js"></script>
+
+</body>
+</html>

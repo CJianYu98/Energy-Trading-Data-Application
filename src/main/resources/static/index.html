@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Aramco Trading - Home</title>
+
+    <style>
+        .buttonHover:hover {
+            background-color: rgba(61, 61, 61, 0.99);
+            color: white;
+        }
+    </style>
+
+    <!-- Iconify for flag icons -->
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+</head>
+<body class="bg-dark" onload="getAll('new'); tw_getAll()">
+
+<div class="col-6 offset-2 mx-auto mb-2 py-3">
+    <div class="card bg-transparent border-0">
+        <div class="card-body text-center ">
+            <img src="/img/aramco_logo.png" width="auto" height="100">
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+
+    <div class="row mb-3">
+        <div class="col-auto text-white">
+            <h4>
+                <span class="rounded-pill px-2 py-1" style="background-color: #2E2E2E">
+                    <span class="iconify-inline" data-icon="emojione:flag-for-indonesia"></span> <span class="px-1">Indonesia</span>
+                </span>
+            </h4>
+        </div>
+
+        <div class="col-auto">
+            <a href="./indo.html">
+                <button type="button" class="btn btn-outline-light buttonHover btn-sm">
+                    Explore More
+                </button>
+            </a>
+        </div>
+
+        <div class="col-auto">
+            <button type="button" id="resetBtn" class="btn btn-secondary btn-sm d-none" onclick="resetToYear()"><strong>Reset Years</strong></button>
+        </div>
+    </div>
+
+    <!-- Indicator values -->
+    <div class="row mb-4">
+        <div class="col-4">
+            <div class="card text-white" style="background-color: #2E2E2E;">
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-0">
+                            <div class="col">
+                                <div><strong>Top Product</strong> <span style="color: rgba(255,255,255,0.65)">(<span id="import_best_years">across Years</span>)</span></div>
+                                <div style="color: rgba(255,255,255,0.65)">Import</div>
+                            </div>
+
+                            <div class="col-auto align-self-center">
+                                <strong id="import_best" style="font-size: 27px;"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card text-white" style="background-color: #2E2E2E;">
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-0">
+                            <div class="col">
+                                <div><strong>Top Product</strong> <span style="color: rgba(255,255,255,0.65)">(<span id="export_best_years">across Years</span>)</span></div>
+                                <div style="color: rgba(255,255,255,0.65)">Export</div>
+                            </div>
+
+                            <div class="col-auto align-self-center">
+                                <strong id="export_best" style="font-size: 27px;"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card text-white" style="background-color: #2E2E2E;">
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-0">
+                            <div class="col">
+                                <div><strong>Net Export</strong> <span style="color: rgba(255,255,255,0.65)">(<span id="indicator_years">across Years</span>)</span></div>
+                                <div style="color: rgba(255,255,255,0.65)">Export - Import</div>
+                            </div>
+
+                            <div class="col-auto align-self-center">
+                                <strong id="indicator_value" style="font-size: 27px;"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row justify-content-between mb-5">
+        <div class="col-6">
+            <div class="card h-100">
+                <div class="card h-100 ">
+                    <div class="card-body">
+                        <div>
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 ">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div>
+                        <canvas id="netLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-auto text-white">
+            <h4>
+                <span class="rounded-pill px-2 py-1" style="background-color: #2E2E2E">
+                    <span class="iconify-inline" data-icon="emojione:flag-for-taiwan"></span> <span class="px-1">Taiwan</span>
+                </span>
+            </h4>
+        </div>
+
+        <div class="col-auto">
+            <a href="./taiwan.html">
+                <button type="button" class="btn btn-outline-light buttonHover btn-sm">
+                    Explore More
+                </button>
+            </a>
+        </div>
+
+        <div class="col-auto">
+            <button type="button" id="resetBtnTw" class="btn btn-secondary btn-sm d-none" onclick="updateTaiwanCharts()"><strong>Reset Years</strong></button>
+        </div>
+    </div>
+
+    <!-- Indicator values -->
+    <div class="row mb-4">
+        <div class="col-4">
+            <div class="card text-white" style="background-color: #2E2E2E;">
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-0">
+                            <div class="col">
+                                <div><strong>Gross Balance</strong> <span style="color: rgba(255,255,255,0.65)">(<span id="grossBalanceYears">across Years</span>)</span></div>
+                                <div style="color: rgba(255,255,255,0.65)">All Products</div>
+                            </div>
+
+                            <div class="col-auto align-self-center">
+                                <strong id="grossBalanceIndicator" style="font-size: 27px;"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card text-white" style="background-color: #2E2E2E;">
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-0">
+                            <div class="col">
+                                <div><strong>Net Balance</strong> <span style="color: rgba(255,255,255,0.65)">(<span id="netBalanceYears">across Years</span>)</span></div>
+                                <div style="color: rgba(255,255,255,0.65)">All Products</div>
+                            </div>
+
+                            <div class="col-auto align-self-center">
+                                <strong id="netBalanceIndicator" style="font-size: 27px;"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card text-white" style="background-color: #2E2E2E;">
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <div class="row p-0">
+                            <div class="col">
+                                <div><strong>Net Import</strong> <span style="color: rgba(255,255,255,0.65)">(<span id="netImportYears">across Years</span>)</span></div>
+                                <div style="color: rgba(255,255,255,0.65)">Import - Export</div>
+                            </div>
+
+                            <div class="col-auto align-self-center">
+                                <strong id="netImportIndicator" style="font-size: 27px;"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row justify-content-between">
+        <div class="col-6">
+            <div class="card h-100">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div>
+                            <canvas id="importExportChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div>
+                        <canvas id="tripleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+<!-- Chart.Js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+</body>
+</html>
